@@ -25,7 +25,7 @@ Github Codespace(LINUX)
   
   <img width="1514" height="929" alt="Screenshot 2025-12-20 130118" src="https://github.com/user-attachments/assets/0f17b42d-e27b-49c9-a8f3-7325aad93588" />
 - The above program is compiled in riscv-elf-gcc and executed using spike.
--  
+  
 
 ---
 ## UNDERSTANDING CHECK
