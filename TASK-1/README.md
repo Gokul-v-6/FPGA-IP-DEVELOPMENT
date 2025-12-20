@@ -15,6 +15,9 @@ Github Codespace(LINUX)
 - **Repository:** vsdfpga_labs
 - **Lab:** basicRISCV Firmware build
 - Generated riscv_logo.bram.hex successfully
+- Risc-v logo.c file
+<img width="1489" height="791" alt="Screenshot 2025-12-20 120204" src="https://github.com/user-attachments/assets/98d7344e-f357-482d-ae91-7a654158a038" />
+
 - Bitstream generation and FPGA flashing skipped
 <img width="1549" height="141" alt="Screenshot 2025-12-19 110656" src="https://github.com/user-attachments/assets/6b8ed38b-b51b-4603-87ca-b99f47ae7d18" />
 
