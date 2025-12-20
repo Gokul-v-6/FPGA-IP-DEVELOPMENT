@@ -2,6 +2,7 @@
 
 ## ENVIRONMENT
 Github Codespace(LINUX)
+Local(WSL ,Ubantu)
 
 ## RISC-V REFERENCE PROGRAM
 - **Repository:** vsd-risc-v2
@@ -30,16 +31,37 @@ Github Codespace(LINUX)
 ---
 ## UNDERSTANDING CHECK
 ### 1. Where is the RISC-V program located in the vsd-riscv2 repository?
-The reference program is located in the 'samples' folder within vsd-riscv2 repository
+The reference program is located in the `samples` folder within vsd-riscv2 repository
 
 ### 2. How is the program compiled and loaded into memory?
-The program is compiled using 'riscv64-unknown-elf-gcc' toolchain and executed usind spike simulator.
+The program is compiled using `riscv64-unknown-elf-gcc` toolchain and executed usind spike simulator.
 
 ### 3. How does the RISC-V core access memory and memory-mapped IO?
 Risc-v core access memory via load and store operations using system bus.
 
 ### 4. Where would a new FPGA IP block logically integrate in this system?
-The new FPGA IP block will be integrated to a memory mapped peripheral on system interconnect. The Risc-v processor will be able to communicate with this by access memory in a particular address range. 
+The new FPGA IP block will be integrated to a memory mapped peripheral on system interconnect. The Risc-v processor will be able to communicate with this by access memory in a particular address range.
+
+---
+
+## Local Machine Preparation
+- Cloned `vsd-riscv2` and `vsdfpga_labs` repository locally
+<img width="897" height="320" alt="Screenshot 2025-12-20 181638" src="https://github.com/user-attachments/assets/0c049ba6-2a7c-4fca-8288-a7eabf41f5de" />
+
+- Packages installed:
+  - riscv64-unknown-elf-gcc
+  - spike simulator
+- Above packages are installed with reference to:
+  https://raw.githubusercontent.com/vsdip/vsd-riscv2/refs/heads/main/.devcontainer/Dockerfile
+- Output from reference program(Sum to 9 numbers)
+  <img width="1913" height="200" alt="Screenshot 2025-12-20 160159" src="https://github.com/user-attachments/assets/61fdfc7a-04eb-47ae-a79a-9e21f352d28a" />
+- Compiling `riscv_logo` locally using riscv64-unknown-elf-gcc compiler and executing using spike simulator
+- <img width="1478" height="324" alt="Screenshot 2025-12-20 184303" src="https://github.com/user-attachments/assets/d2786202-c6a5-4e01-805a-6870e13c7f2b" />
+- Output
+ <img width="881" height="345" alt="Screenshot 2025-12-20 184015" src="https://github.com/user-attachments/assets/14913baa-d9eb-4880-a6b9-9363c5309caf" />
+
+---
+
 
 ## NOTE
-- The complete workfloe is executed in Github Codespaces .Bitstream generation and FPGA flashing is skipped.
+- The complete workflow is executed in Github Codespaces .Bitstream generation and FPGA flashing is skipped.
