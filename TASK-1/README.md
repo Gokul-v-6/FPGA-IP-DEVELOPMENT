@@ -21,6 +21,12 @@ Github Codespace(LINUX)
 - Bitstream generation and FPGA flashing skipped
 <img width="1549" height="300" alt="Screenshot 2025-12-19 110656" src="https://github.com/user-attachments/assets/6b8ed38b-b51b-4603-87ca-b99f47ae7d18" />
 
+- Output of riscv_logo.c
+  
+  <img width="1514" height="929" alt="Screenshot 2025-12-20 130118" src="https://github.com/user-attachments/assets/0f17b42d-e27b-49c9-a8f3-7325aad93588" />
+- The above program is compiled in riscv-elf-gcc and executed using spike.
+-  
+
 ---
 ## UNDERSTANDING CHECK
 ### 1. Where is the RISC-V program located in the vsd-riscv2 repository?
