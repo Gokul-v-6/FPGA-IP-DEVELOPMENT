@@ -10,7 +10,7 @@ This floder implements the Simple GPIO Output IP as a memory-mapped peripheral a
 ## Address Mapping
 | Component | Base Address | Offset | Description |
 |----------|--------------|--------|-------------|
-| GPIO IP  | `0x00400020` | `0x20` | GPIO Output Register |
+| GPIO IP  | `0x00400000` | `0x20` | GPIO Output Register |
 ---
 ## GPIO RTL
 - File - [gpio_ip.v](sources/gpio_ip.v)
