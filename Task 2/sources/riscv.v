@@ -3,6 +3,8 @@
  * Using GNU tools
  */
 
+//This file contains the Soc integration of gpio_ip.v 
+
 `default_nettype none
 `include "clockworks.v"
 `include "emitter_uart.v"
@@ -357,7 +359,7 @@ module SOC (
    localparam IO_LEDS_bit      = 0;  // W five leds
    localparam IO_UART_DAT_bit  = 1;  // W data to send (8 bits) 
    localparam IO_UART_CNTL_bit = 2;  // R status. bit 9: busy sending
-   localparam IO_gpio_bit          = 3; 
+   localparam IO_gpio_bit          = 3; //Gpio 
 
    always @(posedge clk) begin
       if(isIO & mem_wstrb & mem_wordaddr[IO_LEDS_bit]) begin
