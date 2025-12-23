@@ -4,6 +4,8 @@
  */
 
 //This file contains the Soc integration of gpio_ip.v 
+// The code for risc-v processor is taken from vsdfpga_labs repository. 
+// Added custom made gpio block that controls leds
 
 `default_nettype none
 `include "clockworks.v"
