@@ -42,6 +42,14 @@ The above simulation shows data being successfully written into GPIO register wh
 
 The above image shows successful write operation to GPIO register which writes into LEDs register that is mapped to LEDS present on FPGA board. 
 
+---
+
+## Hardware Implementation
+Environment Setup - Followed [Datasheet](datasheet.pdf) to setup local environment for flashing fpga
+<img width="1338" height="1011" alt="Screenshot 2025-12-23 222615" src="https://github.com/user-attachments/assets/3d274cd0-d391-4b3e-b720-e9d2decaf627" />
+
+![IMG20251223223513](https://github.com/user-attachments/assets/440c95c7-8655-4c60-8f19-be1aef1262bb)
+
 
 
 
