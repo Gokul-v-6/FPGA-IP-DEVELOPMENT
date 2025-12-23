@@ -37,10 +37,10 @@ The above simulation shows data being successfully written into GPIO register wh
 
 ### SOC
 - Assembly File - [gpio_test](gpio_test.S)
-- The above file is converted to hex file and simulated using [SoC test bench](sim/tb_soc.v)
+- The above file is converted to hex file and simulated using [SoC test bench](sim/tb_soc.v).
 <img width="1308" height="303" alt="Screenshot 2025-12-23 131307" src="https://github.com/user-attachments/assets/f45f1223-cfb9-433b-ba3a-b0909db174db" />
 
-The above image shows that GPIO data is written to LEDS register. 
+The above image shows successful write operation to GPIO register which writes into LEDs register that is mapped to LEDS present on FPGA board. 
 
 
 
