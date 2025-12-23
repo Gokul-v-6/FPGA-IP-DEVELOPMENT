@@ -1,6 +1,8 @@
     .section .text
     .globl main
 _start:
+    j main
+main:
     # Constants
     li t0, 0x400020  # IO op bass address + IO_GPIO offset (0x400000 + 0x20)
     li t1, 0x00000055  # pattern to write
