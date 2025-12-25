@@ -49,6 +49,12 @@ Environment Setup - Followed [Datasheet](datasheet.pdf) to setup local environme
 <img width="1338" height="1011" alt="Screenshot 2025-12-23 222615" src="https://github.com/user-attachments/assets/3d274cd0-d391-4b3e-b720-e9d2decaf627" />
 
 ![IMG20251223223513](https://github.com/user-attachments/assets/440c95c7-8655-4c60-8f19-be1aef1262bb)
+---
+## Key Learning
+- Understood how SoC communicates with peripherals using address mapped IO.
+- Adress Decoding and peripheral integration.
+- Tool usage and flow control.
+  
 
 
 
