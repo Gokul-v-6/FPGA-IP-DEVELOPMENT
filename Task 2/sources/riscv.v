@@ -367,6 +367,8 @@ module SOC (
       if(isIO & mem_wstrb & mem_wordaddr[IO_LEDS_bit]) begin
 	 LEDS <= mem_wdata;
 //	 $display("Value sent to LEDS: %b %d %d",mem_wdata,mem_wdata,$signed(mem_wdata));
+		  else if(isIO & mem_wstrb & mem_wordaddr[IO_gpio_bit])
+			  LEDS<=gpio_out;
       end
    end
 
