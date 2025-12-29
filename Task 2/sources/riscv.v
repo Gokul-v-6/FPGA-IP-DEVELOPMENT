@@ -3,10 +3,6 @@
  * Using GNU tools
  */
 
-//This file contains the Soc integration of gpio_ip.v 
-// The code for risc-v processor is taken from vsdfpga_labs repository. 
-// Added custom made gpio block that controls leds
-
 `default_nettype none
 `include "clockworks.v"
 `include "emitter_uart.v"
@@ -361,14 +357,15 @@ module SOC (
    localparam IO_LEDS_bit      = 0;  // W five leds
    localparam IO_UART_DAT_bit  = 1;  // W data to send (8 bits) 
    localparam IO_UART_CNTL_bit = 2;  // R status. bit 9: busy sending
-   localparam IO_gpio_bit          = 3; //Gpio 
+   localparam IO_gpio_bit          = 3; 
 
    always @(posedge clk) begin
       if(isIO & mem_wstrb & mem_wordaddr[IO_LEDS_bit]) begin
-	 LEDS <= mem_wdata;
-//	 $display("Value sent to LEDS: %b %d %d",mem_wdata,mem_wdata,$signed(mem_wdata));
-		  else if(isIO & mem_wstrb & mem_wordaddr[IO_gpio_bit])
-			  LEDS<=gpio_out;
+	 // direct write to LEDs has priority
+	 LEDS <= mem_wdata[4:0];
+      end 
+      else if(isIO & mem_wstrb & mem_wordaddr[IO_gpio_bit]) begin
+	 LEDS <= gpio_out[4:0];
       end
    end
 
@@ -389,7 +386,7 @@ module SOC (
    );
 
    wire [31:0] gpio_out;
-   wire [31:0] gpio_rdata; \\reads the data stored in gpio register in case of read op
+   wire [31:0] gpio_rdata; // reads the data stored in gpio register in case of read op
    gpio_ip GPIO(
       .clk(clk),
       .rst(!resetn),
@@ -400,13 +397,6 @@ module SOC (
       .read_en(mem_rstrb),
       .rdata(gpio_rdata)
    );
-   
-   always @(posedge clk) begin
-      if(isIO & mem_wstrb & mem_wordaddr[IO_gpio_bit]) begin
-	 LEDS <= mem_wdata;
-//	 $display("Value sent to LEDS: %b %d %d",mem_wdata,mem_wdata,$signed(mem_wdata));
-      end
-   end
 
 
    wire [31:0] IO_rdata = 
