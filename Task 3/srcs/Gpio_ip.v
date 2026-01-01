@@ -6,7 +6,7 @@ input write_en, //mem_writestrobe
 input [31:0]wdata,
  input read_en,
 output reg [31:0]rdata,
-//address [1:0],mem_address[3:2]
+               //mem_wordaddr[4:3]
 input [1:0]offset,
 //GPIO Registers
 inout [4:0]gpio_pins // PINS on fpga
