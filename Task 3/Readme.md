@@ -16,21 +16,43 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 
 ---
 ## GPIO RTL
-- File - [gpio_ip.v](sources/gpio_ip.v)
+- File - [Gpio_ip.v](srcs/gpio_ip.v)
 - Features
-  - 32-bit gpio register 
+  - 32-bit gpio data register
+  - Directional control => 1 - output, 0 - input.
+  - Read Register - Reads data if pin is output, input value is pin is input. 
   - Synchronous write using clock
-  - Readback logic returning last written value
+- Signal description
+  
+| Signal |  |
+|----------|--------------|
+| `clk`  | System clock(40Mhz) | 
+| `rst`  | reset |
+| `sel`  | is IO & mem_wordaddr[IO_gpio_bit], check if accessed mem address is Gpio_ip  | 
+| `wdata`  | write data |
+| `rdata`  | read data |
+| `read_en`  | read enable |
+| `write_en`  | write enable |
+| `offset`  | mem_wordaddr[4:3] |
+| `gpio_pins`  | Wired to external Gpio_pins |
+
 ---
 
 ## SoC Integration
-- The GPIO module is instantiated in [SoC](sources/riscv.v)
-<img width="632" height="175" alt="Screenshot 2025-12-23 103438" src="https://github.com/user-attachments/assets/1b394e75-5e1d-406b-bc86-778b73f274fb" />
-<img width="839" height="495" alt="Screenshot 2025-12-23 103357" src="https://github.com/user-attachments/assets/8e162ebe-8edc-498e-ad92-a2e7ea89e18f" />
-
+- The GPIO module is instantiated in [SoC](srcs/riscv.v)
+ <img width="420" height="188" alt="image" src="https://github.com/user-attachments/assets/6f7166de-e4e5-4a0b-99f8-d2792473cc05" />
+ <img width="707" height="295" alt="Screenshot 2026-01-01 201705" src="https://github.com/user-attachments/assets/57d1f38a-7796-4df0-9ecd-baf146b5e448" />
+ 
 The above images show the instantiated module in SoC
 
+- Changes from Task 2
+  - LEDS is made from output reg to inout for Bidirectional flow.
+  - Direction register added in Gpio_ip and mapped to a memory address. 
+  - Readback logic.
+
 ---
+
+
 
 ## Simulation
 ### [GPIO](sim/gpio_ip_sim.v)
