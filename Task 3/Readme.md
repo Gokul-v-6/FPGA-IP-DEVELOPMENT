@@ -48,8 +48,9 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 - When CPU access memory address `0x00400000` , mem_addre[22]=1 , isIO signal goes high implying a IO devices are accessed.
 - `sel`- isIO & mem_wordaddr[IO_gpio_bit],  For indicating Gpio pins are used.
 
-## Bidirectional Flow
+### Bidirectional Flow
 <img width="439" height="33" alt="image" src="https://github.com/user-attachments/assets/83821362-95fc-47e6-969e-e7bce13f36ba" />
+
 Gpio pins are assigned the value in Data or Z based on Direction control . Incase the pin is assigned Z , input drives that pin.
 
 ## Readback logic
