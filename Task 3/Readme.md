@@ -1,6 +1,6 @@
 # Designing And Integrating Memory Mapped IP
 ## Task Overview
-This floder implements the Simple GPIO Output IP as a memory-mapped peripheral and integrates it into the existing RISC-V SoC.
+This folder implements the Simple GPIO bidirectional IP as a memory-mapped peripheral and integrates it into the existing RISC-V SoC.
 - The GPIO IP Funcionality
   - One 32-bit register
   - Writing to the register updates an output signal
@@ -10,7 +10,10 @@ This floder implements the Simple GPIO Output IP as a memory-mapped peripheral a
 ## Address Mapping
 | Component | Base Address | Offset | Description |
 |----------|--------------|--------|-------------|
-| GPIO IP  | `0x00400000` | `0x20` | GPIO Output Register |
+| GPIO IP  | `0x00400000` | `0x04` | GPIO data Register |
+| GPIO IP  | `0x00400000` | `0x24` | GPIO direction Register |
+| GPIO IP  | `0x00400000` | `0x44` | GPIO read Register |
+
 ---
 ## GPIO RTL
 - File - [gpio_ip.v](sources/gpio_ip.v)
