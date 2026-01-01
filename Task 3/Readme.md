@@ -97,7 +97,7 @@ The above image shows successful simulation of Bidirectional GPIO Ip on SoC.
 ---
 ## Key Learning
 - Understood how SoC communicates with peripherals using address mapped IO.
-- Bidirectional flw control.
+- Bidirectional flow control.
 - Adress Decoding and peripheral integration.
 - Tool usage and flow control.
   
