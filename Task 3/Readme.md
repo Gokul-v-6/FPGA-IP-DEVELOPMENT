@@ -53,7 +53,7 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 
 Gpio pins are assigned the value in Data or Z based on Direction control . Incase the pin is assigned Z , input drives that pin.
 
-## Readback logic
+### Readback logic
 <img width="554" height="273" alt="image" src="https://github.com/user-attachments/assets/5402a5da-20e1-4d0f-9d66-74602582616e" />
 
 Gpio pins are wired to readback register . when read_en is asserted and memory location `0x00400044` is read ,it read backs gpio pins.  
