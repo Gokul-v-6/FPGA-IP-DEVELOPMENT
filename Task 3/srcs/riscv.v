@@ -467,7 +467,7 @@ always @(posedge clk) begin
     end
     
 //output selection
-assign gpio_pins = gpio_dir ? gpio_data : 4'bz;
+assign gpio_pins = gpio_dir ? gpio_data : 5'bz;
 //assigns data in gpio_data if output pin, lets input drive if input pin
 
 
