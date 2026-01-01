@@ -13,6 +13,8 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 | GPIO IP  | `0x00400000` | `0x04` | GPIO data Register |
 | GPIO IP  | `0x00400000` | `0x24` | GPIO direction Register |
 | GPIO IP  | `0x00400000` | `0x44` | GPIO read Register |
+| UART_DATA | `0x00400000` | `0x08` | |
+| UART_CONTROL| `0x00400000` | `0x10` | Stores busy bit |
 
 ---
 ## GPIO RTL
@@ -28,7 +30,7 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 |----------|--------------|
 | `clk`  | System clock(40Mhz) | 
 | `rst`  | reset |
-| `sel`  | is IO & mem_wordaddr[IO_gpio_bit], check if accessed mem address is Gpio_ip  | 
+| `sel`  | isIO & mem_wordaddr[IO_gpio_bit], check if accessed mem address is Gpio_ip  | 
 | `wdata`  | write data |
 | `rdata`  | read data |
 | `read_en`  | read enable |
@@ -38,6 +40,24 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 
 ---
 
+## How CPU Communicates With IP 
+
+### Address Decoding
+<img width="713" height="28" alt="image" src="https://github.com/user-attachments/assets/e168ae06-9675-441a-bafd-d44a26b66903" />
+
+- When CPU access memory address `0x00400000` , mem_addre[22]=1 , isIO signal goes high implying a IO devices are accessed.
+- `sel`- isIO & mem_wordaddr[IO_gpio_bit],  For indicating Gpio pins are used.
+
+## Bidirectional Flow
+<img width="439" height="33" alt="image" src="https://github.com/user-attachments/assets/83821362-95fc-47e6-969e-e7bce13f36ba" />
+Gpio pins are assigned the value in Data or Z based on Direction control . Incase the pin is assigned Z , input drives that pin.
+
+## Readback logic
+<img width="554" height="273" alt="image" src="https://github.com/user-attachments/assets/5402a5da-20e1-4d0f-9d66-74602582616e" />
+
+Gpio pins are wired to readback register . when read_en is asserted and memory location `0x00400044` is read ,it read backs gpio pins.  
+
+---  
 ## SoC Integration
 - The GPIO module is instantiated in [SoC](srcs/riscv.v)
  <img width="420" height="188" alt="image" src="https://github.com/user-attachments/assets/6f7166de-e4e5-4a0b-99f8-d2792473cc05" />
@@ -46,7 +66,7 @@ This folder implements the Simple GPIO bidirectional IP as a memory-mapped perip
 The above images show the instantiated module in SoC
 
 - Changes from Task 2
-  - LEDS is made from output reg to inout for Bidirectional flow.
+  - LEDS is changed from output reg to inout for Bidirectional flow.
   - Direction register added in Gpio_ip and mapped to a memory address. 
   - Readback logic.
 
@@ -55,28 +75,28 @@ The above images show the instantiated module in SoC
 
 
 ## Simulation
-### [GPIO](sim/gpio_ip_sim.v)
-<img width="1352" height="323" alt="Screenshot 2025-12-23 113612" src="https://github.com/user-attachments/assets/00284e29-3629-4cda-b706-a28dd4d9731a" />
+### [GPIO](sim/Gpio_test.v)
+<img width="1355" height="391" alt="Screenshot 2026-01-01 195739" src="https://github.com/user-attachments/assets/832420f4-25b7-44dc-93ff-719d8ab4ab52" />
 
-The above simulation shows data being successfully written into GPIO register when data is written to `0x004000020` address.
-
-### SOC
-- Assembly File - [gpio_test](gpio_test.S)
-- The above file is converted to hex file and simulated using [SoC test bench](sim/tb_soc.v).
-<img width="1308" height="303" alt="Screenshot 2025-12-23 131307" src="https://github.com/user-attachments/assets/f45f1223-cfb9-433b-ba3a-b0909db174db" />
-
-The above image shows successful write operation to GPIO register which writes into LEDs register that is mapped to LEDS present on FPGA board. 
+- Observation
+  - Direction[4:0] - 11111(All are output).
+      - Readback register = LEDS = Data register.
+  - Direction[4:0] - 00000 (All are inputs).
+      - Readback Resgister = LEDS = Z, This shows that LEDS are now acting as inputs .
 
 ---
+### SOC
+- C File - [gpio_test](sim/Gpio_task3.c)
+- Test bench in task 2 was reused.
+<img width="1298" height="289" alt="Screenshot 2026-01-01 193213" src="https://github.com/user-attachments/assets/b313be81-cf0d-4f19-8826-a32461c7ea05" />
 
-## Hardware Implementation
-Environment Setup - Followed [Datasheet](datasheet.pdf) to setup local environment for flashing fpga
-<img width="1338" height="1011" alt="Screenshot 2025-12-23 222615" src="https://github.com/user-attachments/assets/3d274cd0-d391-4b3e-b720-e9d2decaf627" />
+The above image shows successful simulation of Bidirectional GPIO Ip on SoC.
 
-![IMG20251223223513](https://github.com/user-attachments/assets/440c95c7-8655-4c60-8f19-be1aef1262bb)
+
 ---
 ## Key Learning
 - Understood how SoC communicates with peripherals using address mapped IO.
+- Bidirectional flw control.
 - Adress Decoding and peripheral integration.
 - Tool usage and flow control.
   
