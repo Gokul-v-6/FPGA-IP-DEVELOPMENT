@@ -220,8 +220,36 @@ For simulation Clkdivider is taken as 0.
 
 ---
 
-## Constrain File
+    
+
+## 9. Constrain File
 - Assigned the Pins as stated below for SPI signals
 <img width="297" height="127" alt="image" src="https://github.com/user-attachments/assets/c52c2311-7a18-480e-9c64-311b8bf42157" />
 
+---
+## 10. Hardware Implementaion
+### Step
+1. Generating Bitstream - This builds a Bitstream file that is flashed to FPGA
+   ```bash
+   make build
+   ```
+
+2. Flashing Bitstream to FPGA - Make sure that FPGA is connected to device and is visible. Visibility can be checked by running `lsusb` . If we observe something like below image FPGA is visible to device and can be programmed.
+<img width="937" height="222" alt="Screenshot 2026-01-06 215621" src="https://github.com/user-attachments/assets/b0320aa5-90dd-4d7a-a147-6e35936d26a2" />
+
+Bitstream can be flashed by command
+```bash
+sudo iceprog SOC.bin
+```
+
+3. External LEDS or other devices are connected with respect to pin connection in constrain file
+4. UART - This can be verified by command
+  ```bash
+  make terminal
+  ```
+
+It runs the command from makefile.We will observe output like below image.
+<img width="634" height="890" alt="Screenshot 2026-01-07 022419" src="https://github.com/user-attachments/assets/7dc0ec50-7a60-4286-8f6e-ba2a5ec31ba4" />
+
+The output shows the OxA5 is become transmitted to an external device, this case I mapped as 0x3C via SPI.
 
