@@ -657,10 +657,10 @@ end
 always @(*) begin
     if(sel && r_en) begin
         case(offset)
-            CNTRL: rdata = {16'd0,clkdiv , 6'd0, start, en};
-            TXDATA: rdata = {24'd0, tx};
-            RXDATA: rdata = {24'd0,rxdata};
-            STATUS: rdata = {29'd0, 1'b1, done, busy};
+            CNTRL: rdata <= {16'd0,clkdiv , 6'd0, start, en};
+            TXDATA: rdata <= {24'd0, tx};
+            RXDATA: rdata <= {24'd0,rxdata};
+            STATUS: rdata <= {29'd0, 1'b1, done, busy};
             default: rdata= 32'b0;
          endcase
       end
