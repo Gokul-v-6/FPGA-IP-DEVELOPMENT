@@ -1,9 +1,7 @@
-// --- Program to display multiples of a specified positive integer ---
 #include <stdint.h>
 #include "io.h"
-#define NUM 3 // Specified integer
 
-// Function to transmit message through UART
+// UART print (unchanged)
 void print_uart(const char *str) {
     while (*str) {
         while (IO_IN(UART_CNTL));
@@ -11,54 +9,55 @@ void print_uart(const char *str) {
     }
 }
 
-// Simple delay function
+// Simple delay
 void delay(int cycles) {
     volatile int i;
     for (i = 0; i < cycles; i++);
 }
 
-// Counter increment function
-void inc(int* counter) {
-    (*counter)++;
-    if (*counter > 15) *counter = 0;
+// Fast hex print (1 byte)
+static inline void uart_hex8(uint8_t v) {
+    const char lut[] = "0123456789ABCDEF";
+    while (IO_IN(UART_CNTL));
+    IO_OUT(UART_DATA, lut[(v >> 4) & 0xF]);
+    while (IO_IN(UART_CNTL));
+    IO_OUT(UART_DATA, lut[v & 0xF]);
 }
-void main() {
-//Uncomment these while flashing to fpga.
-    //delay(500000)
-    // print_uart("\n--- SPI MASTER IP TEST ---\n");    
-    // print_uart("Mode-0 | 8-bit | Loopback Test\n");
 
-    // Enable SPI, set CLKDIV = 4
-    SPI_OUT(SPI_CTRL, (1 << 0) | (4 << 8));  // EN=1, CLKDIV=4
+void main() {
+
+    print_uart("\n--- SPI MASTER IP TEST ---\n");
+
+    // Enable SPI, CLKDIV = 4
+    SPI_OUT(SPI_CTRL, (1 << 0) | (4 << 8));
 
     while (1) {
 
-        // Clear DONE (write-1-to-clear)
+        // Clear DONE
         SPI_OUT(SPI_STATUS, (1 << 1));
 
-        // Load transmit data
+        // TX = 0xA5
         SPI_OUT(SPI_TXDATA, 0xA5);
 
-        // Start transfer (EN must remain 1)
-        SPI_OUT(SPI_CTRL, (1 << 0) | (1 << 1)); // EN + START
+        // Start transfer
+        SPI_OUT(SPI_CTRL, (255<<8)|(1 << 0) | (1 << 1));
 
-        // Poll DONE
+        // Wait for DONE
         while (!(SPI_IN(SPI_STATUS) & (1 << 1)));
 
-        // Read received data
-        uint8_t rx = SPI_IN(SPI_RXDATA) & 0xFF;
+        // Read RX
+        uint8_t rx = SPI_IN(SPI_RXDATA);
 
-  //Ucomment these while hardware implementaion.
-        // Print result via UART
-        // print_uart("TX: 0xA5  RX: 0x");
-        // const char lut[] = "0123456789ABCDEF";
-        // char hex[3];
-        // hex[0] = lut[(rx >> 4) & 0xF];
-        // hex[1] = lut[rx & 0xF];
-        // hex[2] = '\0';
-        // print_uart(hex);
-        // print_uart("\n");
+        // Print: A5->XX
+        uart_hex8(0xA5);
+        while (IO_IN(UART_CNTL));
+        IO_OUT(UART_DATA, '-');
+        while (IO_IN(UART_CNTL));
+        IO_OUT(UART_DATA, '>');
+        uart_hex8(rx);
+        while (IO_IN(UART_CNTL));
+        IO_OUT(UART_DATA, '\n');
 
-        delay(1000000);
+        delay(200000);   // reduced delay
     }
 }
