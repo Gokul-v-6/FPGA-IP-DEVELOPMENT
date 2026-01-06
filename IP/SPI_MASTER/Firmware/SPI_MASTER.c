@@ -25,7 +25,7 @@ static inline void uart_hex8(uint8_t v) {
 }
 
 void main() {
-
+//can be commentedd out while simulation for faster simulation
     print_uart("\n--- SPI MASTER IP TEST ---\n");
 
     // Enable SPI, CLKDIV = 4
