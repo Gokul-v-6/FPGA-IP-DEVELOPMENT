@@ -661,7 +661,7 @@ always @(*) begin
             TXDATA: rdata <= {24'd0, tx};
             RXDATA: rdata <= {24'd0,rxdata};
             STATUS: rdata <= {29'd0, 1'b1, done, busy};
-            default: rdata= 32'b0;
+            default: rdata <= 32'b0;
          endcase
       end
 end
