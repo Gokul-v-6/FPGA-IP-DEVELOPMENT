@@ -557,33 +557,26 @@ reg [7:0]rxdata; //rx data will be stored in done phase to avoid corruption
 //REGISTER write 
 always @(posedge clk) begin
     if(rst) begin
-        en<=0;
-        start<=0;
-        clkdiv<=0;
-        bit<=0;
-        busy<=0;
-        done<=0;
-        clkdiv<=0;
-        tx<=0;
-        rx<=0;
-        rxdata<=0;
-        end
-        
-     else if(sel && w_en) begin
-        case(offset) 
-            CNTRL: begin en<=wdata[0];
-                            clkdiv<=wdata[15:8];
-                            if(~busy)
-                                start<=wdata[1];
-                   end
-            TXDATA: begin tx<=wdata[7:0];
-                    end
-            STATUS: begin if(wdata[1])
-                            done<=0;
-                    end
-         endcase
-      end       
+        en     <= 0;
+        start  <= 0;
+        clkdiv <= 0;
+        tx     <= 0;
+        done   <= 0;
+    end
+    else if(sel && w_en) begin
+        case(offset)
+            CNTRL: begin
+                en     <= wdata[0];
+                clkdiv <= wdata[15:8];
+                if(!busy)
+                    start <= wdata[1];
+            end
+            TXDATA: tx <= wdata[7:0];
+            STATUS: if(wdata[1]) done <= 0;
+        endcase
+    end
 end
+
   
 //FSM
 reg [1:0]state;
@@ -654,7 +647,7 @@ always @(posedge clk) begin
 end
 
 //READ
-always @(*) begin
+always @(posedge clk) begin
     if(sel && r_en) begin
         case(offset)
             CNTRL: rdata <= {16'd0,clkdiv , 6'd0, start, en};
@@ -664,5 +657,6 @@ always @(*) begin
             default: rdata <= 32'b0;
          endcase
       end
+	else rdata<=32'b0;
 end
 endmodule
