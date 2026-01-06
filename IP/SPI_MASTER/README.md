@@ -218,6 +218,10 @@ The testbench also includes mock models for the iCE40 oscillator and PLL.
       
 For simulation Clkdivider is taken as 0.
 
+---
 
+## Constrain File
+- Assigned the Pins as stated below for SPI signals
+<img width="297" height="127" alt="image" src="https://github.com/user-attachments/assets/c52c2311-7a18-480e-9c64-311b8bf42157" />
 
 
