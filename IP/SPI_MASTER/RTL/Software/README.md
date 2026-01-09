@@ -25,13 +25,13 @@ The IP is fully software-controlled and does not require any RTL modification by
 
 All IP documentation is provided in the `docs/` folder.  
 
-- [IP_User_Guide](docs/IP_User_Guide.md) - Describes what the IP does, supported SPI mode (Mode-0), features, clock/reset assumptions, and limitations.
+- [IP_User_Guide](Docs/IP_User_Guide.md) - Describes what the IP does, supported SPI mode (Mode-0), features, clock/reset assumptions, and limitations.
 
-- [Register_Map](docs/Register_Map.md) - Complete register table with offsets, bit fields, reset values, and read/write behavior.  This is the primary reference for writing firmware drivers.
+- [Register_Map](Docs/Register_Map.md) - Complete register table with offsets, bit fields, reset values, and read/write behavior.  This is the primary reference for writing firmware drivers.
 
-- [Integration_Guide](docs/Integration_Guide.md) - Step-by-step instructions to integrate the SPI IP into VSDSquadron SoC (`soc_top.v`), including address decode rules and board-level pin connections.
+- [Integration_Guide](Docs/Integration_Guide.md) - Step-by-step instructions to integrate the SPI IP into VSDSquadron SoC (`soc_top.v`), including address decode rules and board-level pin connections.
 
-- [Example_Usage](docs/Example_Usage.md) - Explains the software programming model and provides example C code for initialization and byte transfers.
+- [Example_Usage](Docs/Example_Usage.md) - Explains the software programming model and provides example C code for initialization and byte transfers.
 ---
 ## Test & Validation
 1. Program FPGA with SoC + SPI IP integrated
