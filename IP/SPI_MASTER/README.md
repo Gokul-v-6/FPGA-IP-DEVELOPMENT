@@ -252,4 +252,18 @@ It runs the command from makefile.We will observe output like below image.
 <img width="634" height="890" alt="Screenshot 2026-01-07 022419" src="https://github.com/user-attachments/assets/7dc0ec50-7a60-4286-8f6e-ba2a5ec31ba4" />
 
 The output shows the OxA5 is become transmitted to an external device, this case I mapped as 0x3C via SPI.
+### Demo
+
+https://github.com/user-attachments/assets/4e15aed6-8dc7-4749-a09c-d357e5cac60e
+
+#### LED POSITION
+From Left
+  - 1 - cs_n
+  - 2 - mosi
+  - 3 - sclk
+SCLK Frequency - 23.5 KHz
+
+MOSI - 0xA5
+
+We can observe cs_n going high when reset pressed
 
