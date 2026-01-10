@@ -25,7 +25,7 @@ The IP is fully software-controlled and does not require any RTL modification by
 
 All IP documentation is provided in the `docs/` folder.  
 
-- [IP_User_Guide](Docs/IP_User_Guide.md) - Describes what the IP does, supported SPI mode (Mode-0), features, clock/reset assumptions, and limitations.
+- [IP_User_Guide](Docs/IP_USER_GUIDE.md) - Describes what the IP does, supported SPI mode (Mode-0), features, clock/reset assumptions, and limitations.
 
 - [Register_Map](Docs/Register_Map.md) - Complete register table with offsets, bit fields, reset values, and read/write behavior.  This is the primary reference for writing firmware drivers.
 
