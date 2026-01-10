@@ -42,7 +42,7 @@ module SPI(
 localparam CNTRL=2'b00;
 localparam TXDATA=2'b01;
 localparam RXDATA=2'b10;
-localparam STATUS=2'b00;
+localparam STATUS=2'b11;
 
 //control register fields
 reg en;
