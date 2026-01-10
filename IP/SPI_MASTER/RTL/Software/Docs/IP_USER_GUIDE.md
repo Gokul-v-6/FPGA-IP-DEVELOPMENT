@@ -55,4 +55,7 @@ The following block diagram shows the logical structure of the SPI Master IP and
 - **SPI Signals**  
   Standard SPI Master signals connected to an external peripheral.
 
+## Hardware Usage
+
+
 
