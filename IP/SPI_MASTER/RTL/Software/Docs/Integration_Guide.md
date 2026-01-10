@@ -330,6 +330,21 @@ SPI SPI (
   .cs_n     (cs_n)
 );
 ```
+Defining New SPI Master IP Signals in SoC Module
+```verilog
+module SOC (
+   //  input 	     CLK,  // system clock 
+    input 	     RESET,// reset button
+    inout [4:0] LEDS, // GPIO pins
+    input 	     RXD,  // UART receive
+    output 	     TXD,   // UART transmit
+    
+    //SPI Master signals
+    output sclk,
+    output mosi,
+    output cs_n,
+    input miso
+```
 
 Update Read MUX
 ```verilog
@@ -338,5 +353,69 @@ Update Read MUX
 	                                       : mem_wordaddr[IO_gpio_bit] ? gpio_rdata
                                                                         : mem_addr[12] ? spi_rdata : 32'b0;
 ```
+
+---
+## Address Decoding Expectations
+
+### IO Page
+The VSDSquadron SoC identifies I/O space using: `isIO = mem_addr[22]`
+
+### SPI Select (as implemented in the SoC)
+This SPI IP uses the following select condition: `spi_sel = isIO && (mem_addr[12] == 1)`
+In RTL, this is connected as:
+
+```verilog
+.sel(isIO & mem_addr[12])
+```
+
+Software Base Address
+Since mem_addr[12] selects the 0x1000 offset region, the SPI base address is: `SPI_BASE=0x00401000`
+
+---
+## Register Offset Interface
+Register offsets are selected using: 
+```verilog
+.offset(mem_addr[3:2])
+```
+Therefore the SPI register map is:
+
+| Register | Offset | Address|
+| --- | --- | --- |
+| CTRL | 0x00 | SPI_BASE + 0x00|
+| TXDATA | 0x04 | SPI_BASE + 0x04|
+| RXDDATA | 0x08 | SPI_BASE + 0x08|
+| STATUS | 0x0C | SPI_BASE + 0x0C|
+
+---
+## Signals Exposed to SoC Top-Level
+| Signal | Direction |
+| --- | --- |
+| sclk | output |
+| mosi | output |
+| miso | input |
+| cs_n | output |
+
+---
+## Constraint File
+
+Map the SPI pins to VSDSquadron FPGA pins in the constraints file:
+```xcf
+set_io sclk 34
+set_io mosi 35
+set_io miso 36
+set_io cs_n 37
+```
+---
+## Board-Level Pin Connections
+Connect SPI signals to the peripheral / header pins:
+| SPI Master Signal | Pin Number | Connect To Peripheral |
+| --- | --- | --- |
+| `sclk` | 34 | SCLK |
+| `mosi` | 35 | MOSI |
+| `miso` | 36 | MISO |
+| `cs_n` | 37 | CS |
+| `GND` | GND | GND |
+
+**Note** - The slave device must support SPI Mode-0 (CPOL=0, CPHA=0).
 
 ---
