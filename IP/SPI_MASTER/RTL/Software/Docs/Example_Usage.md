@@ -248,3 +248,18 @@ If the PIN Connections are made according to installation guide. The user should
 
 Demo:
 
+https://github.com/user-attachments/assets/76d0f0ca-df4a-4956-872e-497101cf76c7
+
+
+#### LED POSITION
+From Left
+  - 1 - cs_n
+  - 2 - mosi
+  - 3 - sclk
+SCLK Frequency - 23.5 KHz
+
+MOSI - 0xA5
+
+We can observe cs_n going high when reset pressed
+
+
