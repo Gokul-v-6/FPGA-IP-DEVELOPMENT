@@ -237,3 +237,14 @@ Include address mapping file
 
 ---
 ## Validation and Expected Output
+## Expected Output
+If the PIN Connections are made according to installation guide. The user should observe the output
+
+- `cs_n` asserts **LOW** at the beginning of every transfer  
+- `sclk` toggles for **8 clock pulses** per transaction (SPI Mode-0). It will a frequency of 23.5 KHz since system clock frequency is 12 MHz
+- `mosi` transmits the byte `0xA5` (MSB first)
+- `miso` is sampled to form RXDATA
+- `cs_n` deasserts **HIGH** after transfer completion
+
+Demo:
+
