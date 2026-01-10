@@ -351,6 +351,7 @@ int main() {
 }
 ```
 
+</details>
 This programs counts from 0 to 15 then resets back to 0. Direction of all pins are choosen to be output for verification. Then can be used as digital inputs pins also by manipulating direction register.
 
 ### Gpio Pin connection
