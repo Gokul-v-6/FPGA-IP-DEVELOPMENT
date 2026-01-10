@@ -245,6 +245,7 @@ If the PIN Connections are made according to installation guide. The user should
 - `mosi` transmits the byte `0xA5` (MSB first)
 - `miso` is sampled to form RXDATA
 - `cs_n` deasserts **HIGH** after transfer completion
+- The above program keeps running in a loop.
 
 Demo:
 
@@ -262,4 +263,101 @@ MOSI - 0xA5
 
 We can observe cs_n going high when reset pressed
 
+## Expected UART Output
+The Uart should print. 
+--- SPI MASTER IP TEST (MODE-0) ---
 
+A5->XX
+
+A5->XX
+
+A5->XX
+
+Getting the above output in terminal indicates that transfer is done ,i.e, `done` register is asserted.
+
+---
+## Common Failure Symptoms
+### Common Failure Symptoms
+
+| Symptom | Likely Cause | Recommended Fix |
+|--------|--------------|-----------------|
+| No UART output | UART wiring/baud mismatch | Check UART TX pin mapping + baud rate |
+| `sclk` not toggling | SPI not enabled | Ensure `CTRL.EN = 1` |
+| `cs_n` never goes LOW | SPI select / address decode issue | Verify SPI_BASE = `0x401000` and `sel = isIO & mem_addr[12]` |
+| DONE never sets | clock/reset issue | Confirm system clock running and reset released |
+| RX always `0x00` / `0xFF` | MISO floating/unwired | Connect MISO properly and ensure common GND |
+| Wrong RX values | Mode mismatch | Ensure slave is configured for SPI Mode-0 |
+| Corrupted transfers | SPI clock too fast | Increase CLKDIV value |
+
+---
+
+## Known Limitations & Notes
+
+Commercial limitations and design notes for this SPI IP:
+
+- **No interrupt support** (polling-only operation)
+- **Single-channel SPI master** (one slave select `cs_n`)
+- **SPI Mode-0 only** (CPOL=0, CPHA=0)
+- **Single-byte transfer per START**
+  - Each transaction transfers exactly 8 bits
+- **No FIFO buffering**
+  - TXDATA and RXDATA store one byte only
+- **Clock assumption**
+  - SPI timing depends on system clock (`clk`) from VSDSquadron SoC
+  - SPI clock = function of `CLKDIV` and system clock frequency
+- **Board requirement**
+  - External SPI peripheral must share a common ground with VSDSquadron FPGA
+
+---
+## GPIO IP Testing
+Below is the C program to test GPIO IP. 
+<details><summary>GPIO_IP.c</summary>
+   
+```c
+#include <stdint.h>
+#include "io.h"
+
+// UART print
+void print_uart(const char *str) {
+    while (*str) {
+        while (IO_IN(UART_CNTL));
+        IO_OUT(UART_DATA, *str++);
+    }
+}
+
+// Delay
+void delay(int cycles) {
+    volatile int i;
+    for (i = 0; i < cycles; i++);
+}
+
+int main() {
+
+    print_uart("\n--- GPIO LED COUNT TEST ---\n");
+
+    // Set GPIO[3:0] as output (4 LEDs)
+    // If your LED width is 5, you can set 0x1F
+    IO_OUT(GPIO_DIR, 0x1F);
+
+    while (1) {
+        for (uint32_t count = 1; count <= 15; count++) {
+
+            // Output count on LEDs (lower 4 bits)
+            IO_OUT(GPIO_DATA, count & 0x0F);
+
+            delay(300000);
+        }
+    }
+}
+```
+
+This programs counts from 0 to 15 then resets back to 0. Direction of all pins are choosen to be output for verification. Then can be used as digital inputs pins also by manipulating direction register.
+
+### Gpio Pin connection
+| PIN  | FUNCTION |
+| --- | --- |
+| 38 | Digital GPIO 0 |
+| 43 | Digital GPIO 1 |
+| 45 | Digital GPIO 2 |
+| 47 | Digital GPIO 3 |
+| 6 | Digital GPIO 4 |
