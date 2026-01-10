@@ -246,6 +246,10 @@ If the PIN Connections are made according to installation guide. The user should
 - `miso` is sampled to form RXDATA
 - `cs_n` deasserts **HIGH** after transfer completion
 - The above program keeps running in a loop.
+  
+**SIMULATION** :
+  <img width="1293" height="323" alt="Screenshot 2026-01-06 161710" src="https://github.com/user-attachments/assets/bbcb22a4-fe8f-41a9-aacb-fb162552dede" />
+
 
 Demo:
 
@@ -362,3 +366,15 @@ This programs counts from 0 to 15 then resets back to 0. Direction of all pins a
 | 45 | Digital GPIO 2 |
 | 47 | Digital GPIO 3 |
 | 6 | Digital GPIO 4 |
+
+### Demo
+
+https://github.com/user-attachments/assets/e6cb9863-6e60-456b-968c-12f5cbb397c4
+
+**LED POSITION** :
+
+From left
+   - LED 1 - GPIO[2]
+   - LED 2 - GPIO[1]
+   - LED 3 - GPIO[0]
+
