@@ -56,6 +56,22 @@ The following block diagram shows the logical structure of the SPI Master IP and
   Standard SPI Master signals connected to an external peripheral.
 
 ## Hardware Usage
+<img width="386" height="291" alt="image" src="https://github.com/user-attachments/assets/f5c18c7d-9408-4d75-a1e7-15e2454a4135" />
+
+<img width="484" height="238" alt="image" src="https://github.com/user-attachments/assets/f9381a91-ad56-4428-a879-220c260a29f7" />
+
+### Terms
+- ICESTORM_LC - Logic Cell Usage
+- ICESTORM_RAM - BRAM Usage
+- ICESTORM_HFOSC - Internal High Frequency Oscillator
+- SB_IO - FPGA Pins Usage
+- SB_GB - Global Buffer Usage
+
+### Key Observation
+- SoC frequency - 12 MHz , produced by internal oscillator
+- ALU and Counters are optimised using carry chains.
+- 100% utilization of Global Buffer suggests we cannot add extra clock domains
+
 
 
 
